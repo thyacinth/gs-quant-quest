@@ -1,4 +1,8 @@
+import sys
 import numpy as np
-import wikipedia as wp
 
-print wp.summary("Wikipedia").encode("utf-8")
+def main(argv):
+	print "Hello World"
+
+if __name__ == "__main__":
+   main(sys.argv[1:])
