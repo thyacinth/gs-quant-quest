@@ -1,4 +1,4 @@
 import numpy as np
-import pywikibot as pwb
+import wikipedia as wp
 
-print "Hello World!"
+print wp.summary("Wikipedia").encode("utf-8")
