@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup as bs
 from bs4 import SoupStrainer as ss
 import re
 import urllib2 as ul
-
+ 	
 def links(webpage):
 	links = []
 	biglist = ul.urlopen(webpage)
@@ -17,7 +17,7 @@ def links(webpage):
 		for element in name:
 			links.append('http://en.wikipedia.org/'+element.get('href'))
 	print links
-links('https://en.wikipedia.org/wiki/List_of_S&P_500_companies')
+
 
 def contents(webpage):
 	biglist = ul.urlopen(webpage)
@@ -32,7 +32,7 @@ def contents(webpage):
 		for link in name:
 			content.append(link.text)
 	print content 
-contents('https://en.wikipedia.org/wiki/List_of_S&P_500_companies')
+
 
 #what's left: I need to 
 #- perhaps remove unicode
