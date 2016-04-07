@@ -1,40 +1,19 @@
-# TODO Xin - Add methods here that we will need. Try to think carefully about organization and how to separate functionality effectively.
 from bs4 import BeautifulSoup as bs
-from bs4 import SoupStrainer as ss
+from bs4 import SoupStrainer 
 import re
-import urllib2 as ul
- 	
-def links(webpage):
-	links = []
-	biglist = ul.urlopen(webpage)
-	soup = bs(biglist, "html.parser")
-	tablebody = soup.body.find(id="content")
-	bodycontent = tablebody.find(id="bodyContent")
+import urllib2
+
+def get_snp_500(webpage):
+	d = {}
+	html = urllib2.urlopen(webpage)
+	soup = bs(html, "html.parser")
+	content = soup.body.find(id="content")
+	bodycontent = content.find(id="bodyContent")
 	table = bodycontent.find(id="mw-content-text").table
-	for n in range(1, 505):
-		row = table.find_all('tr')[n]
-		name = row.find_all('td')[1]#this is to get the security td's 
-		for element in name:
-			links.append('http://en.wikipedia.org/'+element.get('href'))
-	print links
-
-
-def contents(webpage):
-	biglist = ul.urlopen(webpage)
-	soup = bs(biglist, "html.parser")
-	tablebody = soup.body.find(id="content")
-	bodycontent = tablebody.find(id="bodyContent")
-	table = bodycontent.find(id="mw-content-text").table
-	content = []
-	for n in range(1, 505):
-		row = table.find_all('tr')[n]
-		name = row.find_all('td')[1]
-		for link in name:
-			content.append(link.text)
-	print content 
-
-
-#what's left: I need to 
-#- perhaps remove unicode
-#- convert this to a function
-#- grab the links
+	rows = table.find_all('tr')
+	for row in rows[1:]:
+		cells = row.find_all('td')
+		stock = cells[1].find('a')
+		CID = cells[-1].text
+		d[CID] = 'http://en.wikipedia.org/'+stock.get('href') # not putting security name b/c i  will derive that from the redirected url
+	return d
