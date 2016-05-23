@@ -45,3 +45,4 @@ print hreflist
 #task for tonight: grab hrefs
 #for listofpages in listlist:
 	#print gethref(listofpages)
+ 
